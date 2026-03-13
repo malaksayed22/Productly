@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Design Tokens ─────────────────────────────────── */
+:root {
+  /* Dark mode (default) */
+  --bg-primary: #0f0f13;
+  --bg-secondary: #1a1a24;
+  --bg-tertiary: #22222f;
+  --accent: #6c63ff;
+  --accent-hover: #5a52e0;
+  --accent-soft: rgba(108, 99, 255, 0.12);
+  --text-primary: #f0f0ff;
+  --text-secondary: #8b8ba7;
+  --border: #2e2e3f;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  /* aliases used in component inline styles */
+  --c-success: var(--success);
+  --c-danger: var(--danger);
+  --c-warning: var(--warning);
+}
+
+html.dark {
+  --bg-primary: #0f0f13;
+  --bg-secondary: #1a1a24;
+  --bg-tertiary: #22222f;
+  --accent: #6c63ff;
+  --accent-hover: #5a52e0;
+  --accent-soft: rgba(108, 99, 255, 0.12);
+  --text-primary: #f0f0ff;
+  --text-secondary: #8b8ba7;
+  --border: #2e2e3f;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+}
+
+/* Light mode overrides (applied when dark class is NOT present) */
+html:not(.dark) {
+  --bg-primary: #f8f8ff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f0ff;
+  --accent: #6c63ff;
+  --accent-hover: #5a52e0;
+  --accent-soft: rgba(108, 99, 255, 0.1);
+  --text-primary: #0f0f1a;
+  --text-secondary: #6b6b80;
+  --border: #e2e1f0;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #d97706;
+}
+
+/* Input focus ring using CSS (avoids JS handler conflicts with react-hook-form) */
+.field-input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px var(--accent-soft) !important;
+  outline: none;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "DM Sans", system-ui, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Outfit", sans-serif;
+  }
+}
+
+/* ── Shimmer animation for skeleton cards ──────────────── */
+@layer utilities {
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--bg-tertiary) 0%,
+      var(--border) 40%,
+      var(--bg-tertiary) 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.3s ease-out both;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.2s ease-out both;
+  }
+
+  .font-mono-price {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-family: "DM Mono", "Fira Code", ui-monospace, monospace;
+  }
+}
